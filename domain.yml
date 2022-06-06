@@ -5,29 +5,97 @@ intents:
   - goodbye
   - affirm
   - deny
-  - mood_great
-  - mood_unhappy
   - bot_challenge
+  - getProgram
+  - getLocation
+  - thanks
+  - bookingWanted
+  - informMovie
+  - informDate
+  - informTime
+  - informAmount
+
+#  - inform 
+
+entities:
+- movie_name
+- planned_date
+- planned_time
+- no_of_tickets 
+
+slots:
+  movie_name:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: movie_name
+      intent: inform
+  no_of_tickets:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: no_of_tickets
+      intent: inform
+  planned_date:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: planned_date
+      intent: inform
+  planned_time:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: planned_time
+      intent: inform
 
 responses:
+  utter_thanks:
+  - text: "You're welcome, can I help you with anything else?"
   utter_greet:
-  - text: "Hey! How are you?"
-
-  utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
-
-  utter_did_that_help:
-  - text: "Did that help you?"
-
+  - text: "Hey! How can I help you?"
   utter_happy:
   - text: "Great, carry on!"
-
   utter_goodbye:
-  - text: "Bye"
-
+  - text: "Thank you for using this service. Have a great time!"
   utter_iamabot:
   - text: "I am a bot, powered by Rasa."
+
+  utter_getLocation:
+  - text: "The cinema ist located at Potsdamer Platz 97, 86669 Königsmoos"
+  utter_getProgram:
+  - text: "Currently, the following movies are available: \n Top Gun Maverick \n Jurassic World Dominion \n Joker \n Avatar The Way of Water \n Inception"
+  utter_ask_movie_name:
+  - text: "Which Movie would you like to watch? Please enter the Movie Name."
+  utter_ask_planned_date:
+  - text: "Please enter the date in the format of dd.mm.yyyy"
+  utter_ask_planned_time:
+  - text: "Please enter the time in the format of hh:mm (24h)"
+  utter_ask_no_of_tickets:
+  - text: "How many tickets you want to book?"
+  utter_booking_status:
+  - text: "As you wished, {no_of_tickets} tickets for the movie {movie_name} on {planned_date} {planned_time} are booked successfully."
+  utter_confirm_booking:
+  - text: "So you want me to book {no_of_tickets} tickets for the movie {movie_name} on {planned_date} {planned_time}. Is that correct?"
+  utter_ask_other_help:
+  - text: "Can I help you with something else?"
+  utter_ask_for_booking:
+  - text: "Do you want me to book tickets for you?"
+
+actions:
+- action_book_tickets
+- action_receive_movie
+- action_receive_date
+- action_receive_time
+- action_receive_amount
+
+forms:
+  bookingForm:
+    required_slots:
+      - movie_name
+      - no_of_tickets
+      - planned_date
+      - planned_time
 
 session_config:
   session_expiration_time: 60
