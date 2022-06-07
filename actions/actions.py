@@ -4,9 +4,6 @@
 # See this guide on how to implement these action:
 # https://rasa.com/docs/rasa/custom-actions
 
-
-# This is a simple example for a custom action which utters "Hello World!"
-
 from posixpath import dirname
 from typing import Any, Text, Dict, List
 
@@ -37,7 +34,7 @@ class ValidateBookingForm(FormValidationAction):
         """Validate `movie_name` value."""
 
         if slot_value.lower() not in AVAILABLE_MOVIES:
-            dispatcher.utter_message(text=f"We don't have this movie in our cinema. Please choose one of the following: \n {AVAILABLE_MOVIES}")
+            dispatcher.utter_message(text=f"We don't have this movie in our cinema. Please choose one of the following: \n {'/'.join(AVAILABLE_MOVIES)}.")
             return {"movie_name": None}
         dispatcher.utter_message(text=f"{slot_value} is a great choice!.")
         return {"movie_name": slot_value}
@@ -52,7 +49,7 @@ class ValidateBookingForm(FormValidationAction):
         """Validate `planned_date` value."""
 
         if slot_value.lower() not in AVAILABLE_DATES:
-            dispatcher.utter_message(text=f"This movie is only shown on the following dates: \n {AVAILABLE_DATES}")
+            dispatcher.utter_message(text=f"This movie is only shown on the following dates: \n {'/'.join(AVAILABLE_DATES)}.")
             return {"planned_date": None}
         dispatcher.utter_message(text=f"{slot_value} will be a good day!")
         return {"planned_date": slot_value}
@@ -67,7 +64,7 @@ class ValidateBookingForm(FormValidationAction):
         """Validate `planned_time` value."""
 
         if slot_value.lower() not in AVAILABLE_TIMES:
-            dispatcher.utter_message(text=f"This movie is only on the following times: \n {AVAILABLE_TIMES}")
+            dispatcher.utter_message(text=f"This movie is only on the following times: \n {'/'.join(AVAILABLE_TIMES)}.")
             return {"planned_time": None}
         dispatcher.utter_message(text=f"{slot_value} is movie time!")
         return {"planned_time": slot_value}
@@ -118,8 +115,3 @@ class ActionBookTickets(Action):
             dispatcher.utter_message(text=f"As you wished, {amount} ticket(s) for the movie {movie_name} on {planned_date} {planned_time} booked successfully.")
         
         return []
-
-
-## Help functions
-
-# funtion to check if all the necessary slots are filled, to call the booking function

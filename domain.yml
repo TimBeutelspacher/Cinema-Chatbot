@@ -14,7 +14,6 @@ intents:
   - informDate
   - informTime
   - informAmount
-#  - inform 
 
 entities:
 - movie_name
@@ -59,17 +58,16 @@ responses:
   - text: "Thank you for using this service. Have a great time!"
   utter_iamabot:
   - text: "I am a bot, powered by Rasa."
-
   utter_getLocation:
   - text: "The cinema ist located at Potsdamer Platz 97, 86669 Königsmoos"
   utter_getProgram:
-  - text: "Currently, the following movies are available: \n Top Gun Maverick \n Jurassic World Dominion \n Joker \n Avatar The Way of Water \n Inception"
+  - text: "Currently, the following movies are available: \nTop Gun Maverick / Jurassic World Dominion / Joker / Avatar / Inception"
   utter_ask_movie_name:
-  - text: "Which Movie would you like to watch? Please enter the Movie Name."
+  - text: "Which Movie would you like to watch? Please enter the Movie Name. The following are available: \nTop Gun Maverick / Jurassic World Dominion / Joker / Avatar / Inception"
   utter_ask_planned_date:
-  - text: "Please enter the date in the format of dd.mm"
+  - text: "Please enter the date in the format of dd.mm.\nThe following are available: \n28.06 / 28.06 / 29.06 / 30.06 / 01.07 / 02.07 / 03.07"
   utter_ask_planned_time:
-  - text: "Please enter the time in the format of hh:mm (24h)"
+  - text: "Please enter the time in the format of hh:mm. The following are available: \n19:45 / 20:30 / 21:15 / 22:00 / 23:45"
   utter_ask_no_of_tickets:
   - text: "How many tickets you want to book?"
   utter_booking_status:
@@ -83,10 +81,6 @@ responses:
 
 actions:
 - action_book_tickets
-- action_receive_movie
-- action_receive_date
-- action_receive_time
-- action_receive_amount
 - validate_bookingForm
 
 forms:
@@ -99,4 +93,4 @@ forms:
 
 session_config:
   session_expiration_time: 60
-  carry_over_slots_to_new_session: true
+  carry_over_slots_to_new_session: false
