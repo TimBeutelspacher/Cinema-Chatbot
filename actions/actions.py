@@ -11,77 +11,81 @@ from posixpath import dirname
 from typing import Any, Text, Dict, List
 
 from rasa_sdk.events import SlotSet
-from rasa_sdk import Action, Tracker
+from rasa_sdk import Action, Tracker, FormValidationAction
 from rasa_sdk.executor import CollectingDispatcher
+from rasa_sdk.types import DomainDict
 import pathlib
 
 # Load list of available movies
-movies = pathlib.Path("data/movies.txt").read_text().split("\n")
+AVAILABLE_MOVIES = pathlib.Path("data/available_movies.txt").read_text().split("\n")
+AVAILABLE_DATES = pathlib.Path("data/available_dates.txt").read_text().split("\n")
+AVAILABLE_TIMES = pathlib.Path("data/available_times.txt").read_text().split("\n")
+AVAILABLE_AMOUNTS = pathlib.Path("data/available_amounts.txt").read_text().split("\n")
 
-# Set movie slot 
-class ActionReceiveMovie(Action):
-
+# validate user information
+class ValidateBookingForm(FormValidationAction):
     def name(self) -> Text:
-        return "action_receive_movie"
+        return "validate_bookingForm"
 
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+    def validate_movie_name(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        """Validate `movie_name` value."""
 
-        text = tracker.latest_message['text']
+        if slot_value.lower() not in AVAILABLE_MOVIES:
+            dispatcher.utter_message(text=f"We don't have this movie in our cinema. Please choose one of the following: \n {AVAILABLE_MOVIES}")
+            return {"movie_name": None}
+        dispatcher.utter_message(text=f"{slot_value} is a great choice!.")
+        return {"movie_name": slot_value}
 
-        # validate given movie
+    def validate_planned_date(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        """Validate `planned_date` value."""
 
-        dispatcher.utter_message(text=f"{text}, good choice!")
-        return [SlotSet("movie_name", text)]
+        if slot_value.lower() not in AVAILABLE_DATES:
+            dispatcher.utter_message(text=f"This movie is only shown on the following dates: \n {AVAILABLE_DATES}")
+            return {"planned_date": None}
+        dispatcher.utter_message(text=f"{slot_value} will be a good day!")
+        return {"planned_date": slot_value}
 
-# Set amount slot 
-class ActionReceiveAmount(Action):
+    def validate_planned_time(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        """Validate `planned_time` value."""
 
-    def name(self) -> Text:
-        return "action_receive_amount"
+        if slot_value.lower() not in AVAILABLE_TIMES:
+            dispatcher.utter_message(text=f"This movie is only on the following times: \n {AVAILABLE_TIMES}")
+            return {"planned_time": None}
+        dispatcher.utter_message(text=f"{slot_value} is movie time!")
+        return {"planned_time": slot_value}
 
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+    def validate_no_of_tickets(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        """Validate `no_of_tickets` value."""
 
-        text = tracker.latest_message['text']
-        dispatcher.utter_message(text=f"{text} ticket(s), ok.")
-        return [SlotSet("no_of_tickets", text)]
-
-# Set date slot 
-class ActionReceiveDate(Action):
-
-    def name(self) -> Text:
-        return "action_receive_date"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-        text = tracker.latest_message['text']
-        
-        # validate given date
-
-        dispatcher.utter_message(text=f"{text} registered.")
-        return [SlotSet("planned_date", text)]
-
-# Set time slot 
-class ActionReceiveTime(Action):
-
-    def name(self) -> Text:
-        return "action_receive_time"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-        text = tracker.latest_message['text']
-        
-        # validate given time
-
-        dispatcher.utter_message(text=f"{text} registered.")
-        return [SlotSet("planned_time", text)]
+        if slot_value.lower() not in AVAILABLE_AMOUNTS:
+            dispatcher.utter_message(text=f"You can only book up to 10 tickets at once.")
+            return {"no_of_tickets": None}
+        dispatcher.utter_message(text=f"{slot_value} ticket(s) registered.")
+        return {"no_of_tickets": slot_value}
 
 # Book ticket(s) with provided information
 class ActionBookTickets(Action):
@@ -99,7 +103,7 @@ class ActionBookTickets(Action):
         amount = tracker.get_slot("no_of_tickets")
         movie_name = tracker.get_slot("movie_name")
         planned_date = tracker.get_slot("planned_date")
-        planned_time = tracker.get_slot("no_of_tplanned_timeickets")
+        planned_time = tracker.get_slot("planned_time")
 
         if not amount:
             dispatcher.utter_message(text="You need to enter the number of tickets first!")
@@ -111,7 +115,7 @@ class ActionBookTickets(Action):
             dispatcher.utter_message(text="You need to enter a time first!")
         else:
             # in reallife practice --> API-call to book the tickets in internal system
-            dispatcher.utter_message(text=f"As you wished, {amount} tickets for the movie {movie_name} on {planned_date} {planned_time} are booked successfully.")
+            dispatcher.utter_message(text=f"As you wished, {amount} ticket(s) for the movie {movie_name} on {planned_date} {planned_time} booked successfully.")
         
         return []
 

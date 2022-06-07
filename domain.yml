@@ -14,7 +14,6 @@ intents:
   - informDate
   - informTime
   - informAmount
-
 #  - inform 
 
 entities:
@@ -29,25 +28,25 @@ slots:
     mappings:
     - type: from_entity
       entity: movie_name
-      intent: inform
+      intent: informMovie
   no_of_tickets:
     type: text
     mappings:
     - type: from_entity
       entity: no_of_tickets
-      intent: inform
+      intent: informAmount
   planned_date:
     type: text
     mappings:
     - type: from_entity
       entity: planned_date
-      intent: inform
+      intent: informDate
   planned_time:
     type: text
     mappings:
     - type: from_entity
       entity: planned_time
-      intent: inform
+      intent: informTime
 
 responses:
   utter_thanks:
@@ -68,7 +67,7 @@ responses:
   utter_ask_movie_name:
   - text: "Which Movie would you like to watch? Please enter the Movie Name."
   utter_ask_planned_date:
-  - text: "Please enter the date in the format of dd.mm.yyyy"
+  - text: "Please enter the date in the format of dd.mm"
   utter_ask_planned_time:
   - text: "Please enter the time in the format of hh:mm (24h)"
   utter_ask_no_of_tickets:
@@ -88,6 +87,7 @@ actions:
 - action_receive_date
 - action_receive_time
 - action_receive_amount
+- validate_bookingForm
 
 forms:
   bookingForm:

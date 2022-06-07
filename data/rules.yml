@@ -18,35 +18,25 @@ rules:
   - action: bookingForm
   - active_loop: bookingForm
 
-# TODO: Submit Rule
-# - rule: Submit form
+- rule: Submit booking form
+  condition:
+  - active_loop: bookingForm
+  steps:
+  - action: bookingForm
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_book_tickets
+
+# Interruption of booking form
+# - rule: Interruption in Pizza Form
 #   condition:
-#   - active_loop: name_form
+#   # Condition that form is active.
+#   - active_loop: simple_pizza_form
 #   steps:
-#   - action: name_form
-#   - active_loop: null
-#   - slot_was_set:
-#     - requested_slot: null
-#   - action: utter_submit
-#   - action: utter_slots_values
-
-
-# - rule: infromMovieRule
-#   steps:
-#   - intent: informMovie
-#   - action: action_receive_movie
-
-# - rule: infromDateRule
-#   steps:
-#   - intent: informDate
-#   - action: action_receive_date
-
-# - rule: infromTimeRule
-#   steps:
-#   - intent: informTime
-#   - action: action_receive_time
-
-# - rule: infromAmountRule
-#   steps:
-#   - intent: informAmount
-#   - action: action_receive_amount
+#   # This unhappy path handles the case of an intent `bot_challenge`.
+#   - intent: bot_challenge
+#   - action: utter_iamabot
+#   # Return to form after handling the `bot_challenge` intent
+#   - action: simple_pizza_form
+#   - active_loop: simple_pizza_form
