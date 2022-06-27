@@ -9,6 +9,9 @@ nlu:
     - [Joker](movie_name)
     - [Avatar The Way of Water](movie_name)
     - [Inception](movie_name)
+    - [Batman](movie_name)
+    - [Matrix](movie_name)
+    - [Tenet](movie_name)
 
 - intent: informDate
   examples: |

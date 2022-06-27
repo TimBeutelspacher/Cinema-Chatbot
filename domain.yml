@@ -52,12 +52,11 @@ responses:
   - text: "You're welcome, can I help you with anything else?"
   utter_greet:
   - text: "Hey! How can I help you?"
+  - text: "Hey! What can I help you with?"
   utter_happy:
   - text: "Great, carry on!"
   utter_goodbye:
   - text: "Thank you for using this service. Have a great time!"
-  utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
   utter_getLocation:
   - text: "The cinema ist located at Potsdamer Platz 97, 86669 Königsmoos"
   utter_getProgram:

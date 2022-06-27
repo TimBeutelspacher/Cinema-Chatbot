@@ -76,14 +76,14 @@ function Basic() {
         height: '4.5rem',
         borderBottom: '1px solid black',
         borderRadius: '30px 30px 0px 0px',
-        backgroundColor: '#FFDEAD',
+        backgroundColor: '#0a3455',
         color: 'red'
     }
     const styleFooter = {
         //maxWidth : '32rem',
         borderTop: '1px solid black',
         borderRadius: '0px 0px 30px 30px',
-        backgroundColor: '#FFDEAD',
+        backgroundColor: '#0a3455',
     }
     const styleBody = {
         paddingTop: '10px',
@@ -99,8 +99,8 @@ function Basic() {
 
                     <div className="card" style={stylecard}>
                         <div className="cardHeader text-white" style={styleHeader}>
-                            <h1 style={{ marginBottom: '0px', color: 'black' }}>Cinema Chatbot</h1>
-                            {botTyping ? <h6 style={{ color: 'black' }}>is typing....</h6> : null}
+                            <h1 style={{ marginBottom: '0px', color: 'white' }}>Cinema Chatbot</h1>
+                            {botTyping ? <h6 style={{ color: 'white' }}>is typing....</h6> : null}
 
 
 

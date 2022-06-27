@@ -38,7 +38,7 @@
 }
 
 .botmsg{
-    background-color: rgb(250, 235, 215);
+    background-color: rgb(76, 129, 170);
     padding-left: 15px;
     padding-right: 15px;
     height:auto;
@@ -50,7 +50,7 @@
 }
 
 .usermsg{
-    background-color: rgb(250, 240, 230);
+    background-color: rgb(100, 168, 221);
     padding-left: 15px;
     padding-right: 15px;
     height:auto;

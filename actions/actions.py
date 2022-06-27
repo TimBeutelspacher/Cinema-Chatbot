@@ -13,7 +13,8 @@ from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.types import DomainDict
 import pathlib
 
-# Load list of available movies
+# Load list of available values
+# in real practice, run queries to receive real values
 AVAILABLE_MOVIES = pathlib.Path("data/available_movies.txt").read_text().split("\n")
 AVAILABLE_DATES = pathlib.Path("data/available_dates.txt").read_text().split("\n")
 AVAILABLE_TIMES = pathlib.Path("data/available_times.txt").read_text().split("\n")
@@ -24,6 +25,7 @@ class ValidateBookingForm(FormValidationAction):
     def name(self) -> Text:
         return "validate_bookingForm"
 
+    # validate given movie name
     def validate_movie_name(
         self,
         slot_value: Any,
@@ -36,9 +38,10 @@ class ValidateBookingForm(FormValidationAction):
         if slot_value.lower() not in AVAILABLE_MOVIES:
             dispatcher.utter_message(text=f"We don't have this movie in our cinema.")
             return {"movie_name": None}
-        dispatcher.utter_message(text=f"{slot_value} is a great choice!.")
+        dispatcher.utter_message(text=f"{slot_value} is a great choice!")
         return {"movie_name": slot_value}
 
+    # validate given date
     def validate_planned_date(
         self,
         slot_value: Any,
@@ -54,6 +57,7 @@ class ValidateBookingForm(FormValidationAction):
         dispatcher.utter_message(text=f"{slot_value} will be a good day!")
         return {"planned_date": slot_value}
 
+    # validate given time
     def validate_planned_time(
         self,
         slot_value: Any,
@@ -69,6 +73,7 @@ class ValidateBookingForm(FormValidationAction):
         dispatcher.utter_message(text=f"{slot_value} is movie time!")
         return {"planned_time": slot_value}
 
+    # validate given amount
     def validate_no_of_tickets(
         self,
         slot_value: Any,
@@ -102,6 +107,7 @@ class ActionBookTickets(Action):
         planned_date = tracker.get_slot("planned_date")
         planned_time = tracker.get_slot("planned_time")
 
+        # check if all slots are set
         if not amount:
             dispatcher.utter_message(text="You need to enter the number of tickets first!")
         elif not movie_name:
