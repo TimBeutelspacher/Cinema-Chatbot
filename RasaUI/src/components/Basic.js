@@ -2,9 +2,13 @@ import './chatBot.css';
 import react, { useEffect, useState } from 'react';
 import { IoMdSend } from 'react-icons/io';
 import { BiBot, BiUser } from 'react-icons/bi';
+import { VscHubot } from 'react-icons/vsc';
+import { RiUser3Line } from 'react-icons/ri';
+import { AiOutlineSend } from 'react-icons/ai';
+import cinemaIcon from "../cinemaIcon.png";
 
 function Basic() {
-    const [chat, setChat] = useState([{sender: "bot", msg: "Hello my name is CinemaBot, how can I help you?"}]);
+    const [chat, setChat] = useState([{ sender: "bot", msg: "Hello my name is CinemaBot, how can I help you?" }]);
     const [inputMessage, setInputMessage] = useState('');
     const [botTyping, setbotTyping] = useState(false);
 
@@ -66,7 +70,7 @@ function Basic() {
 
     const stylecard = {
         maxWidth: '35rem',
-        border: '1px solid black',
+        border: '1px solid gray',
         paddingLeft: '0px',
         paddingRight: '0px',
         borderRadius: '30px',
@@ -74,16 +78,16 @@ function Basic() {
     }
     const styleHeader = {
         height: '4.5rem',
-        borderBottom: '1px solid black',
+        borderBottom: '1px solid gray',
         borderRadius: '30px 30px 0px 0px',
-        backgroundColor: '#0a3455',
+        backgroundColor: '#7c2023',
         color: 'red'
     }
     const styleFooter = {
         //maxWidth : '32rem',
-        borderTop: '1px solid black',
+        borderTop: '1px solid gray',
         borderRadius: '0px 0px 30px 30px',
-        backgroundColor: '#0a3455',
+        backgroundColor: '#7c2023',
     }
     const styleBody = {
         paddingTop: '10px',
@@ -101,9 +105,6 @@ function Basic() {
                         <div className="cardHeader text-white" style={styleHeader}>
                             <h1 style={{ marginBottom: '0px', color: 'white' }}>Cinema Chatbot</h1>
                             {botTyping ? <h6 style={{ color: 'white' }}>is typing....</h6> : null}
-
-
-
                         </div>
                         <div className="cardBody" id="messageArea" style={styleBody}>
 
@@ -112,24 +113,19 @@ function Basic() {
                                     <div key={key}>
                                         {user.sender === 'bot' ?
                                             (
-
                                                 <div className='msgalignstart'>
-                                                    <BiBot className="botIcon" /><h5 className="botmsg">{user.msg}</h5>
+                                                    <VscHubot className="botIcon" /><h5 className="botmsg">{user.msg}</h5>
                                                 </div>
-
                                             )
-
                                             : (
                                                 <div className='msgalignend'>
-                                                    <h5 className="usermsg">{user.msg}</h5><BiUser className="userIcon" />
+                                                    <h5 className="usermsg">{user.msg}</h5><RiUser3Line className="userIcon" />
                                                 </div>
                                             )
                                         }
                                     </div>
                                 ))}
-
                             </div>
-
                         </div>
                         <div className="cardFooter text-white" style={styleFooter}>
                             <div className="row">
@@ -138,16 +134,14 @@ function Basic() {
                                         <input onChange={e => setInputMessage(e.target.value)} value={inputMessage} type="text" className="msginp"></input>
                                     </div>
                                     <div className="col-2 cola">
-                                        <button type="submit" className="circleBtn" ><IoMdSend className="sendBtn" /></button>
+                                        <button type="submit" className="circleBtn" ><AiOutlineSend className="sendBtn" /></button>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
-
         </div>
     );
 }

@@ -38,7 +38,7 @@
 }
 
 .botmsg{
-    background-color: rgb(76, 129, 170);
+    background-color: #f8786c;
     padding-left: 15px;
     padding-right: 15px;
     height:auto;
@@ -50,7 +50,7 @@
 }
 
 .usermsg{
-    background-color: rgb(100, 168, 221);
+    background-color: #f5aea8;
     padding-left: 15px;
     padding-right: 15px;
     height:auto;
@@ -75,13 +75,13 @@
    
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: rgb(255, 153, 0); 
+    background: #4e0101; 
     border-radius: 10px;
   }
   
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
-    background: #ff7300; 
+    background: #4e0101; 
   }
 
 .botIcon{

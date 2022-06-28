@@ -1,7 +1,11 @@
 .App {
   text-align: center;
-
 }
+
+.head {
+  color:white;
+}
+
 .spareBox{
   height: 50px;
 }
